@@ -1,0 +1,149 @@
+<div class="container">
+  <!-- Intro -->
+  <mat-card class="text-center my-4">
+    <mat-card-header>
+      <mat-card-title>Welcome to Your Finance Tracker</mat-card-title>
+      <mat-card-subtitle>Manage your income and expenses effortlessly.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <a mat-raised-button color="primary" routerLink="/get-started">Get Started</a>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Key feature -->
+  <section class="my-5">
+    <h2 class="text-center">Key Features</h2>
+    <mat-card>
+      <mat-card-content>
+        <div class="container mt-4">
+          <div class="row">
+            <!-- Year Dropdown -->
+            <mat-form-field appearance="fill"  class="year-selector">
+              <mat-label>Select Year</mat-label>
+              <mat-select [(value)]="selectedYear" (selectionChange)="onYearChange($event)">
+                <mat-option *ngFor="let year of availableYears" [value]="year">
+                  {{ year }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="container mt-4">
+          <div class="row">
+            <!-- Total income -->
+            <div class="col-md-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">Total Income</h5>
+                  <!-- Monthly Income Display -->
+                  <ul class="list-group list-group-flush" style="margin-top: 50px;">
+                    <li *ngFor="let month of allMonth; let i = index" class="list-group-item d-flex justify-content-between">
+                      <span>{{ month }}</span>
+                      <span>{{ totalIncome[i] | currency: 'RM' }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Total expense -->
+            <div class="col-md-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">Total Expense</h5>
+                  <!-- Monthly Expense Display -->
+                  <ul class="list-group list-group-flush" style="margin-top: 50px;">
+                    <li *ngFor="let month of allMonth; let i = index" class="list-group-item d-flex justify-content-between">
+                      <span>{{ month }}</span>
+                      <span>{{ totalExpense[i] | currency: 'RM' }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Total combined -->
+            <div class="col-md-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">Net Balance</h5>
+                  <!-- Monthly Combined Display -->
+                  <ul class="list-group list-group-flush" style="margin-top: 50px;">
+                    <li *ngFor="let month of allMonth; let i = index" class="list-group-item d-flex justify-content-between">
+                      <span>{{ month }}</span>
+                      <span>{{ totalCombined[i] | currency: 'RM' }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <!-- Graph chart -->
+  <section class="my-5">
+    <h2 class="text-center">Cumulative Balance</h2>
+    <mat-card>
+      <mat-card-content>
+        <p>Automatically calculate your monthly Net Balance and visualize your financial health.</p>
+        <canvas id="profitChart"></canvas>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <!-- Step by step -->
+  <section class="my-5">
+    <mat-card>
+      <mat-card-content>
+        <h2 class="text-center">How It Works</h2>
+        <ol class="text-center">
+          <li> Set your 'Budgeting Rule'(Need/Want/Saving) </li>
+          <li> Set your monthly commitment(house installment/insurance/tuition fee) </li>
+          <li> Enter your daily income </li>
+          <li> Enter your daily expense </li>
+          <li> Review your financial status in a graph chart.</li>
+          <li> Rate your review for others to see</li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <!-- Review -->
+  <section class="my-5">
+    <h2 class="text-center">User Testimonials</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <mat-card>
+          <mat-card-content>
+            <p>"This app has transformed my budgeting process!"</p>
+            <ngb-rating [(rate)]="rating" [max]="5" class="mt-2">
+              <ng-template let-fill="fill" let-index="index">
+                <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100"></i>
+              </ng-template>
+            </ngb-rating>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-md-4">
+        <mat-card>
+          <mat-card-content>
+            <p>"I finally have control over my finances."</p>
+            <p>- User B</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-md-4">
+        <mat-card>
+          <mat-card-content>
+            <p>"The profit calculation feature is a game changer!"</p>
+            <p>- User C</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </section>
+</div>

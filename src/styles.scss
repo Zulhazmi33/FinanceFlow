@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/azure-blue.css";
+/* Define CSS variables for primary and accent colors */
+:root {
+    --primary-color: #A8CD9F; /* Indigo (primary color) */
+    --accent-color: #E2F4C5;  /* Pink (accent color) */
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f3ffdf;}
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f7feea;}
+
+
+.primary {
+  color: var(--primary-color);
+}
+.accent {
+  color: var(--accent-color);
+}
+.mat-table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+input {
+  background-color: var(--primary-color);
+}

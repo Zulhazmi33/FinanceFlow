@@ -1,0 +1,95 @@
+<div *ngIf="showHeader">
+    <mat-toolbar color="primary" style="background-color: #A8CD9F;" class="fixed-top">
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toggleSidebar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>FinanceFlow</span>
+        <span class="spacer"></span> <!-- This spacer will push the logo to the far right -->
+
+        <!-- Logo with dropdown menu -->
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Logo" class="me-3">
+            <img src="../../../assets/images/guest.png" alt="Logo" class="logo" />
+        </button>
+
+        <!-- Dropdown menu -->
+        <mat-menu #menu="matMenu" class="p-2">
+            <!-- User Information Section -->
+            <div class="dropdown-header p-2">
+                <span class="fw-bold">User: {{ userName || 'Guest' }}</span>
+                <br />
+                <span class="text-muted">Welcome back!</span>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <button mat-menu-item disabled>
+            <mat-icon>question_mark</mat-icon>
+            <span>Coming soon</span>
+            </button>
+            <button mat-menu-item routerLink="profile">
+            <mat-icon>settings</mat-icon>
+            <span>Profile</span>
+            </button>
+            <button mat-menu-item *ngIf="userId == ''; else signedIn" routerLink="login">
+                <mat-icon>login</mat-icon>
+                <span>Sign In</span>
+            </button>
+            <!-- Else Block for when userId is something -->
+            <ng-template #signedIn>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Sign Out</span>
+            </button>
+            </ng-template>
+        </mat-menu>
+    </mat-toolbar>
+
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="sidebar" [class.sidebar-open]="isSidebarOpen">
+                <a routerLink="home" routerLinkActive="active">
+                    <mat-icon>home</mat-icon> Home
+                </a>
+                <mat-divider></mat-divider>
+                <a routerLink="income" routerLinkActive="active">
+                    <mat-icon>attach_money</mat-icon> Income
+                </a>
+                <a routerLink="expense" routerLinkActive="active">
+                    <mat-icon>credit_card</mat-icon> Expense
+                </a>
+                <a routerLink="balance" routerLinkActive="active">
+                    <mat-icon>balance</mat-icon> Net Balance
+                </a>
+                <mat-divider></mat-divider>
+                <a routerLink="review" routerLinkActive="active">
+                    <mat-icon>rate_review</mat-icon> Review
+                </a>
+                <mat-divider></mat-divider>
+                <a style="cursor: pointer;">
+                    <mat-icon>question_mark</mat-icon> Coming soon
+                </a>
+            </div>
+
+            <!-- Content Area -->
+            <div [class.col-md-12]="!isSidebarOpen" [class.col-md-10]="isSidebarOpen" class="content p-3" [class.sidebar-open]="isSidebarOpen">
+                <router-outlet></router-outlet>
+                
+                <!-- Footer -->
+                <div class="container">
+                    <footer class="mt-auto text-center py-3">
+                        <mat-card>
+                            <mat-card-content>
+                                <p>Contact us: infoyourproject.com</p>
+                                <p>&copy; 2023 Your Finance Tracker. All rights reserved.</p>
+                            </mat-card-content>
+                        </mat-card>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!showHeader">
+    <router-outlet></router-outlet>
+</div>

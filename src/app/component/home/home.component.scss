@@ -1,0 +1,25 @@
+  canvas {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+  }
+  
+  i {
+    font-size: 1.5rem;
+    padding-right: 0.1rem;
+  }
+  .filled {
+    color: #ff1e1e;
+  }
+  
+  .year-selector {
+    width: 20%; /* Default width for larger screens */
+  }
+  /* For mobile screens, set width to 100% */
+  @media (max-width: 768px) {
+    .year-selector {
+      width: 100%;
+    }
+  }
+
+  

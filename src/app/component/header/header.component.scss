@@ -1,0 +1,141 @@
+/* Change icon color */
+.example-icon mat-icon {
+  color: white;
+}
+
+/* Sidebar styles */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);  /* Initially off-screen */
+  transition: transform 0.3s ease;  /* Smooth transition for sliding */
+}
+
+/* Sidebar when open */
+.sidebar.sidebar-open {
+  transform: translateX(0);  /* Slide in */
+}
+
+/* Sidebar links - Align to the left */
+.sidebar a {
+  font-size: large;
+  display: flex;
+  justify-content: flex-start;  /* Align items to the left */
+  align-items: center;
+  color: black;
+  padding: 16px;
+  line-height: 3;
+  text-align: left;  /* Ensure text is aligned to the left */
+  text-decoration: none;
+  float: none;  /* Remove float, which isn't needed in a flex layout */
+  transition: background-color 0.3s ease;
+}
+
+/* Active/current link */
+.sidebar a.active {
+  background-color: var(--accent-color, #04AA6D);
+  color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: var(--accent-color, #04AA6D);
+  color: white;
+}
+
+/* Page content */
+div.content {
+  padding: 1px 16px;
+  height: 1000px;
+  transition: margin-left 0.3s ease; /* Smooth transition for content shift */
+}
+
+/* Dynamically set margin-left based on sidebar visibility */
+div.content.sidebar-open {
+  margin-left: 200px; /* When sidebar is open */
+}
+
+/* Spacer to push the logo to the far right */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Logo styling */
+.logo {
+  height: 40px;  /* Adjust size as needed */
+  width: auto;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    transform: translateX(0);  /* Sidebar remains visible */
+  }
+
+  div.content {
+    margin-left: 0;
+  }
+
+  .sidebar a {
+    font-size: medium;
+    padding: 10px 15px;
+  }
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+    font-size: small;
+  }
+}
+
+/* Ensure the button with the logo is vertically centered */
+mat-toolbar button {
+  display: flex;
+  align-items: center;  /* Center content vertically */
+  padding: 0;  /* Remove any extra padding */
+  height: 100%; /* Ensure the button takes the full height of the toolbar */
+}
+
+/* Logo inside the button */
+mat-toolbar .logo {
+  height: 40px;  /* Adjust size as needed */
+  width: auto;
+  margin: 0;  /* Remove margin if any */
+}
+
+/* Ensure the mat-icon inside the button is also aligned properly */
+mat-toolbar button mat-icon {
+  vertical-align: middle;  /* Ensure vertical alignment */
+}
+
+/* Adjust the height of mat-toolbar to ensure proper content height */
+mat-toolbar {
+  height: 60px; /* Set the height of the toolbar */
+  display: flex;
+  align-items: center;  /* Vertically align content */
+}
+
+mat-divider {
+  border-top-width: 2px; /* Makes the line thicker */
+  border-top-color: #808080; /* Light gray color */
+}
+mat-icon {
+  margin-right: 20px
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}

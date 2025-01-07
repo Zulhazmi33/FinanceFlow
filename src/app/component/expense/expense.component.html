@@ -1,0 +1,148 @@
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="card p-5 shadow">
+                <h2 class="card-title text-center primary">Add expense</h2>
+                <form #employeeForm="ngForm">
+                    <mat-form-field>
+                        <mat-label>Amount</mat-label>
+                        <input matInput name="amount" [(ngModel)]="amount" type="number" min="0" max="9999">
+                        <mat-icon matSuffix>credit_card_gear</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Reason</mat-label>
+                        <input matInput name="reason" [(ngModel)]="reason" maxlength="20">
+                        <mat-icon matSuffix>question_mark</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Category</mat-label>
+                        <mat-select name="category" [(ngModel)]="category">
+                            <mat-option value="Need">Need</mat-option>
+                            <mat-option value="Want">Want</mat-option>
+                            <mat-option value="Saving">Saving</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Date</mat-label>
+                        <input matInput name="currentDate" [value]="formattedCurrentDate" disabled>
+                        <mat-icon matSuffix>calendar_month</mat-icon>
+                    </mat-form-field>
+                    <div class="text-center mt-3" *ngIf="!isEditing">
+                        <button mat-raised-button 
+                                class="m-2 w-100" 
+                                color="primary" 
+                                (click)="CREATE_expense()" 
+                                [disabled]="userId == ''">
+                                Save
+                        </button>
+                    </div>
+                    <div class="text-center mt-3" *ngIf="isEditing">
+                        <div class="row">
+                            <div class="col-8">
+                                <button mat-raised-button 
+                                        class="m-2 w-100"  
+                                        color="primary" 
+                                        (click)="UPDATE_expense()" 
+                                        [disabled]="userId == ''">
+                                        Update
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button mat-raised-button 
+                                        class="m-2 w-100"  
+                                        color="primary" 
+                                        (click)="resetForm()" 
+                                        [disabled]="userId == ''">
+                                        <mat-icon>refresh</mat-icon>
+                                </button>
+                            </div>
+                        </div>                        
+                    </div>                    
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card p-5 shadow set-width">
+                <h2 class="text-danger text-center"> Expense List </h2>
+                <div class="mat-table-responsive">
+                    <table mat-table [dataSource]="expenseList" class="table table-striped mat-elevation-z8 no-border">
+                        <!-- Amount Column -->
+                        <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef class="fw-bold"> Amount </th>
+                            <td mat-cell *matCellDef="let expense"> {{expense.amount | currency: 'RM' }} </td>
+                        </ng-container>
+                        <!-- Reason Column -->
+                        <ng-container matColumnDef="reason">
+                            <th mat-header-cell *matHeaderCellDef class="fw-bold"> Reason </th>
+                            <td mat-cell *matCellDef="let expense"> {{expense.reason}} </td>
+                        </ng-container>
+                        <!-- Category Column -->
+                        <ng-container matColumnDef="category">
+                            <th mat-header-cell *matHeaderCellDef class="fw-bold"> Category </th>
+                            <td mat-cell *matCellDef="let expense"> {{expense.category}} </td>
+                        </ng-container>
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef class="fw-bold"> Date </th>
+                            <td mat-cell *matCellDef="let expense"> {{expense.currentDate}} </td>
+                        </ng-container>
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef class="fw-bold"> Action </th>
+                            <td mat-cell *matCellDef="let expense"> 
+                                <button mat-raised-button (click)="editExpense(expense)" color="primary">Edit</button>
+                                <button mat-raised-button (click)="DELETE_expense(expense)" color="accent">Delete</button>
+                            </td>
+                        </ng-container>
+                        <!-- Setting -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Graph chart -->
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="card p-5 shadow">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>Cumulative Expense</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Automatically calculate your monthly profit and visualize your financial health.</p>
+
+                        <!-- Year Dropdown -->
+                        <div>
+                            <mat-form-field appearance="fill"  class="year-selector">
+                                <mat-label>Select Year</mat-label>
+                                <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()">
+                                    <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        
+                        <!-- Month Slider -->
+                        <div>
+                            <label for="month-slider">Select Month: </label>
+                            <input
+                              type="range"
+                              id="month-slider"
+                              min="0"
+                              max="11"
+                              [value]="displayedMonth"
+                              (input)="onMonthChange($event)"
+                            />
+                            <span>{{ displayedMonthName }}</span>
+                        </div>
+                          
+                        <canvas id="profitChart"></canvas>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

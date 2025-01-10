@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { AuthService } from '../../shared/auth.service';
-import { TransactionService } from '../../shared/transaction.service';
+import { TransactionService } from '../../crud/transaction.service';
 import { Transaction } from '../../interface/transaction';
 import { CalendarService } from '../../shared/calendar.service';
 
@@ -28,11 +28,10 @@ export class IncomeComponent {
   id: string = '';
   amount: string = '';
   reason: string = '';
-  category: string = '';
   userId: string | null = "null";
 
   formattedCurrentDate: string | null = '';
-  displayedColumns: string[] = ['amount', 'reason', 'category', 'date', 'action'];
+  displayedColumns: string[] = ['amount', 'reason', 'date', 'action'];
   isEditing: boolean = false;
   availableYears: number[] = []; // Initialize empty array for available years
   
@@ -58,7 +57,7 @@ export class IncomeComponent {
 
 
   CREATE_income() {
-    if (this.amount === '' || this.reason === '' || this.category === '') {
+    if (this.amount === '' || this.reason === '') {
       alert('Fill all input fields');
       return;
     } else {
@@ -66,7 +65,6 @@ export class IncomeComponent {
       this.incomeObj.userId = this.userId;
       this.incomeObj.amount = this.amount;
       this.incomeObj.reason = this.reason;
-      this.incomeObj.category = this.category;
       this.incomeObj.currentDate = this.formattedCurrentDate || '';
 
       this.data.CREATE_income(this.incomeObj);
@@ -100,7 +98,7 @@ export class IncomeComponent {
     );
   }
   UPDATE_income() {console.log('Updating income with ID:', this.id);
-    if (this.amount === '' || this.reason === '' || this.category === '') {
+    if (this.amount === '' || this.reason === '') {
         alert('Fill all input fields');
         return;
     } else {
@@ -108,7 +106,6 @@ export class IncomeComponent {
         this.incomeObj.userId = this.userId;
         this.incomeObj.amount = this.amount;
         this.incomeObj.reason = this.reason;
-        this.incomeObj.category = this.category;
         this.incomeObj.currentDate = this.formattedCurrentDate || '';
         
         this.data.UPDATE_income(this.incomeObj).then(() => {
@@ -130,7 +127,6 @@ export class IncomeComponent {
     this.userId = income.userId;
     this.amount = income.amount;
     this.reason = income.reason;
-    this.category = income.category;
     this.formattedCurrentDate = income.currentDate;
   }
   resetForm() {
@@ -139,7 +135,6 @@ export class IncomeComponent {
     this.id = '';
     this.amount = '';
     this.reason = '';
-    this.category = '';
     this.formattedCurrentDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
   }
 

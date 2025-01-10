@@ -1,1 +1,58 @@
-<p>profile works!</p>
+<div class="container">
+    <mat-accordion>
+        <mat-expansion-panel class="mt-3">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Guidance </mat-panel-title>
+            <mat-panel-description class="icon-right">
+              Open for step-by-step guidance
+              <mat-icon>help</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="card">
+            <mat-list role="list">
+              <mat-list-item role="listitem">
+                <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                Item 1
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                Item 2
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                Item 3
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <mat-card class="example-card" appearance="outlined">
+                <mat-card-header>
+                  <div mat-card-avatar class="example-header-image"></div>
+                  <mat-card-title>Shiba Inu</mat-card-title>
+                  <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput name="employeeId">
+                        <mat-icon matSuffix>mail</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput name="employeeId">
+                        <mat-icon matSuffix>mail</mat-icon>
+                    </mat-form-field>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button>LIKE</button>
+                  <button mat-button>SHARE</button>
+                </mat-card-actions>
+            </mat-card></div>
+    </div>
+</div>
+  

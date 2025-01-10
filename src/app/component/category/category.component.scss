@@ -1,0 +1,25 @@
+.icon-card {
+  cursor: pointer;  /* Indicates it's clickable */
+}
+
+.icon-card:hover {
+  background-color: #f1f1f1;  /* Highlight when hovered */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Slight shadow on hover */
+}
+.fab-container {
+  display: flex;
+  justify-content: center; /* Horizontally center the button */
+  position: relative;
+  margin-top: 10px; /* Adjust spacing as needed */
+}
+.icon-container {
+  display: flex;
+  align-items: center; /* Center the icon vertically */
+  justify-content: center; /* Center the icon horizontally */
+  border: 1px solid black; /* Border similar to input */
+  border-radius: 4px; /* Match the border radius of the input */
+  width: 100px; /* Set a fixed width */
+  height: 50px; /* Set a fixed height */
+  margin: 0 auto; /* Center the container in the column */
+  margin-top: -20px;
+}

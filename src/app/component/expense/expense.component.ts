@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { AuthService } from '../../shared/auth.service';
-import { TransactionService } from '../../shared/transaction.service';
+import { TransactionService } from '../../crud/transaction.service';
 import { Transaction } from '../../interface/transaction';
 import { CalendarService } from '../../shared/calendar.service';
+import { CategoryService } from '../../crud/category.service';
+import { Category } from '../../interface/category';
 
 @Component({
   selector: 'app-expense',
@@ -15,6 +17,7 @@ import { CalendarService } from '../../shared/calendar.service';
 })
 
 export class ExpenseComponent {
+  categoryList: Category[] = [];
   expenseList: Transaction[] = [];
   expenseObj: Transaction = {
     id: '',
@@ -32,6 +35,7 @@ export class ExpenseComponent {
   userId: string | null = "null";
 
   formattedCurrentDate: string | null = '';
+  selectedCategory: string | null = null;  // Variable to store the selected category
   displayedColumns: string[] = ['amount', 'reason', 'category', 'date', 'action'];
   isEditing: boolean = false;
   
@@ -44,7 +48,8 @@ export class ExpenseComponent {
 
   constructor(
     private auth: AuthService, 
-    private data: TransactionService, 
+    private trans: TransactionService, 
+    private cat: CategoryService,
     private datePipe: DatePipe,
     private cal: CalendarService
   ) {}
@@ -54,11 +59,30 @@ export class ExpenseComponent {
     this.formattedCurrentDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
     this.userId = localStorage.getItem('userId') || '';  
     this.READ_expense();
+    this.READ_category();
   }
 
 
+  READ_category() {
+    this.cat.READ_category().subscribe(
+      (res) => {
+        this.categoryList = res.map((e: any) => {
+          const trans = e.payload.doc.data();
+          trans.id = e.payload.doc.id;
+          return trans;
+        })
+        .filter((category: Category) => category.userId === this.userId,alert)
+      },
+      (err) => {
+        alert('Error while fetching expense data');
+      }
+    );
+  }
   CREATE_expense() {
-    if (this.amount === '' || this.reason === '' || this.category === '') {
+    alert(this.amount);
+    alert(this.reason);
+    alert(this.category);
+    if (this.amount === '' || this.reason === '') {
       alert('Fill all input fields');
       return;
     } else {
@@ -69,17 +93,17 @@ export class ExpenseComponent {
       this.expenseObj.category = this.category;
       this.expenseObj.currentDate = this.formattedCurrentDate || '';
 
-      this.data.CREATE_expense(this.expenseObj);
+      this.trans.CREATE_expense(this.expenseObj);
       this.resetForm();
     }
   }
   READ_expense() {
-    this.data.READ_expense().subscribe(
+    this.trans.READ_expense().subscribe(
       (res) => {
         this.expenseList = res.map((e: any) => {
-          const data = e.payload.doc.data();
-          data.id = e.payload.doc.id;
-          return data;
+          const trans = e.payload.doc.data();
+          trans.id = e.payload.doc.id;
+          return trans;
         })
         .filter((expense: Transaction) => expense.userId === this.userId)
         .sort((a: Transaction, b: Transaction) => {
@@ -88,6 +112,14 @@ export class ExpenseComponent {
           const dateB = this.cal.parseDate(b.currentDate);
           return dateA.getTime() - dateB.getTime(); // Sort in ascending order
         });
+
+        // Filter by selected category if a category is chosen
+        if (this.selectedCategory && this.selectedCategory !== 'All') {
+          this.expenseList = this.expenseList.filter(
+            (expense: Transaction) => expense.category === this.selectedCategory
+          );
+        }
+
         // Prepare data for the selected year and month
         this.generateMonthlyData();
         // Render the chart for the selected month and year
@@ -99,7 +131,7 @@ export class ExpenseComponent {
     );
   }
   UPDATE_expense() {console.log('Updating expense with ID:', this.id);
-    if (this.amount === '' || this.reason === '' || this.category === '') {
+    if (this.amount === '' || this.reason === '') {
         alert('Fill all input fields');
         return;
     } else {
@@ -110,7 +142,7 @@ export class ExpenseComponent {
         this.expenseObj.category = this.category;
         this.expenseObj.currentDate = this.formattedCurrentDate || '';
         
-        this.data.UPDATE_expense(this.expenseObj).then(() => {
+        this.trans.UPDATE_expense(this.expenseObj).then(() => {
             this.resetForm();
         }).catch(err => {
             alert('Error while updating expense data');
@@ -119,7 +151,7 @@ export class ExpenseComponent {
 }
   DELETE_expense(expense: Transaction) {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.data.DELETE_expense(expense);
+      this.trans.DELETE_expense(expense);
     }
   }
   editExpense(expense: Transaction) {
@@ -141,7 +173,26 @@ export class ExpenseComponent {
     this.category = '';
     this.formattedCurrentDate = this.datePipe.transform(new Date(), 'MM/dd/yyyy');
   }
-
+  onCategoryChange() {
+    // Reload the expense list from the database whenever the category changes
+    this.READ_expense();  // Fetch all data without filtering
+    if (this.selectedCategory && this.selectedCategory !== 'All') {
+      // After fetching, filter the expenses based on the selected category
+      this.expenseList = this.expenseList.filter(expense => expense.category === this.selectedCategory);
+    }
+    // Optionally log the selected category
+    console.log('Category changed to:', this.selectedCategory);
+  }
+  onReasonChange(event: any): void {
+    const selectedReason = event.value;
+    // Find the category object that matches the selected reason
+    const selectedCategory = this.categoryList.find(cat => cat.reason === selectedReason);
+    // Set the category value based on the selected reason
+    if (selectedCategory) {
+      this.category = selectedCategory.category; // Set the category name to the input field
+    }
+  }
+  
 
 
   renderChart(year: number, month: number) {

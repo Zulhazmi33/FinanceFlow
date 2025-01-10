@@ -10,6 +10,8 @@ import { ReviewComponent } from './component/review/review.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { BalanceComponent } from './component/balance/balance.component';
+import { BudgetAllocationComponent } from './component/budget-allocation/budget-allocation.component';
+import { CategoryComponent } from './component/category/category.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, // Default route
@@ -23,6 +25,8 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'balance', component: BalanceComponent},
+  {path: 'budget', component: BudgetAllocationComponent},
+  {path: 'category', component: CategoryComponent},
 ];
 
 @NgModule({

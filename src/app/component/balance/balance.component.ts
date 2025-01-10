@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { AuthService } from '../../shared/auth.service';
-import { TransactionService } from '../../shared/transaction.service';
+import { TransactionService } from '../../crud/transaction.service';
 import { Transaction } from '../../interface/transaction';
 import { combineLatest } from 'rxjs';
 import { CalendarService } from '../../shared/calendar.service';

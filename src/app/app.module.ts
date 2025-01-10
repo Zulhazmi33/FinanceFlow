@@ -35,11 +35,14 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BudgetAllocationComponent } from './component/budget-allocation/budget-allocation.component';
+import { CategoryComponent } from './component/category/category.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ProfileComponent,
     ForgotPasswordComponent,
     BalanceComponent,
+    BudgetAllocationComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +82,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatSliderModule,
     MatGridListModule,
     MatListModule,
+    MatExpansionModule,
 
     NgbRatingModule,
     NgbCarouselModule

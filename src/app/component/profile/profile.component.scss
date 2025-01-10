@@ -1,3 +1,12 @@
 mat-form-field {
-    width: 100%;
-  }
+  width: 100%;
+}
+
+.example-header-image {
+  width: 50px;  // Adjust width to your desired size
+  height: 50px;  // Adjust height to match the width (for a square shape)
+  border-radius: 50%;  // To make the image circular
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  background-position: center;  // Ensure the image is centered within the div
+}

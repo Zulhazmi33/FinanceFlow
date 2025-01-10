@@ -1,4 +1,76 @@
 <div class="container">
+    <mat-accordion>
+        <mat-expansion-panel class="mt-3">
+        <mat-expansion-panel-header>
+            <mat-panel-title> Guidance </mat-panel-title>
+            <mat-panel-description class="icon-right">
+            Open for step-by-step guidance
+            <mat-icon>help</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="card">
+            <mat-card-content class="card-header text-center p-3">
+                Easily track your daily expenses by entering your daily spending along with its reason. 
+                A graph will be generated to provide a clear visual representation of your monthly spending.
+                To add more list of reason, go to <b>Category</b> section.
+            </mat-card-content>            
+            <mat-list role="list">
+                <mat-list-item role="listitem">
+                    <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                    <strong><ul>Add Expense</ul></strong>
+                </mat-list-item>
+                <mat-list role="list">
+                    <mat-list-item role="listitem">
+                        <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                        Insert your spending amount
+                    </mat-list-item>
+                    <mat-list-item role="listitem">
+                        <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                        Choose your reason
+                    </mat-list-item>
+                    <mat-list-item role="listitem">
+                        <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                        Category will be automaticaly selected after inserting reason
+                    </mat-list-item>
+                    <mat-list-item role="listitem">
+                        <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                        Date is fixed to current date
+                    </mat-list-item>
+                    <mat-list-item role="listitem">
+                    <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                    Click submit
+                    </mat-list-item>
+                </mat-list>
+
+                <mat-list-item role="listitem">
+                    <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                    <strong><ul>Expense List</ul></strong>
+                </mat-list-item>
+                <mat-list role="list">
+                    <mat-list-item role="listitem">
+                        <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                        Filter the result by its category(Need/Want/Saving)
+                    </mat-list-item>
+                    <mat-list-item role="listitem">
+                        <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                        You can EDIT or DELETE your previously created data
+                    </mat-list-item>
+                </mat-list>
+
+                <mat-list-item role="listitem">
+                    <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                    <strong><ul>Cumulative Expense</ul></strong>
+                </mat-list-item>
+                <mat-list role="list">
+                    <mat-list-item role="listitem">
+                        <mat-icon matListIcon class="list-icon">arrow_right</mat-icon>
+                        Filter the monthly graph by year or month(current year and month will be initially selected)
+                    </mat-list-item>
+                </mat-list>
+            </mat-list>
+        </div>
+        </mat-expansion-panel>
+    </mat-accordion>
     <div class="row mt-3">
         <div class="col-md-4">
             <div class="card p-5 shadow">
@@ -9,7 +81,7 @@
                         <input matInput name="amount" [(ngModel)]="amount" type="number" min="0" max="9999">
                         <mat-icon matSuffix>credit_card_gear</mat-icon>
                     </mat-form-field>
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <mat-label>Reason</mat-label>
                         <input matInput name="reason" [(ngModel)]="reason" maxlength="20">
                         <mat-icon matSuffix>question_mark</mat-icon>
@@ -21,6 +93,19 @@
                             <mat-option value="Want">Want</mat-option>
                             <mat-option value="Saving">Saving</mat-option>
                         </mat-select>
+                    </mat-form-field> -->
+                    <mat-form-field>
+                        <mat-label>Reason</mat-label>
+                            <mat-select name="reason" [(ngModel)]="reason" (selectionChange)="onReasonChange($event)">
+                                <mat-option *ngFor="let cat of categoryList" value={{cat.reason}}>
+                                    <mat-icon>{{cat.icon}}</mat-icon> {{cat.reason}}
+                                </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Category</mat-label>
+                        <input matInput [value]="category" disabled>
+                        <mat-icon matSuffix>category</mat-icon>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Date</mat-label>
@@ -110,7 +195,7 @@
             <div class="card p-5 shadow">
                 <mat-card>
                     <mat-card-header>
-                        <mat-card-title>Cumulative Expense</mat-card-title>
+                        <h2 class="card-title text-center primary">Cumulative Expense</h2>
                     </mat-card-header>
                     <mat-card-content>
                         <p>Automatically calculate your monthly profit and visualize your financial health.</p>

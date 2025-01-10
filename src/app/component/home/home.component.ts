@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { TransactionService } from '../../shared/transaction.service';
+import { TransactionService } from '../../crud/transaction.service';
 import { Transaction } from '../../interface/transaction';
 import { combineLatest } from 'rxjs';
 import { CalendarService } from '../../shared/calendar.service';
@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
           .filter((income: Transaction) => income.userId === this.userId);
 
           // Calculate total income per month
-          this.calculateTotalIncome();
+          this.calculateTotal(this.incomeList, this.totalIncome);
       },
       (err) => {
         alert('Error while fetching income data');
@@ -82,11 +82,7 @@ export class HomeComponent implements OnInit {
         .filter((expense: Transaction) => expense.userId === this.userId);
 
         // Calculate total expense per month
-        this.calculateTotalExpense();
-        // Prepare data for the selected year and month
-        this.generateMonthlyData();
-        // Render the chart for the selected month and year
-        this.renderChart(this.selectedYear, this.displayedMonth);
+        this.calculateTotal(this.expenseList, this.totalExpense);
       },
       (err) => {
         alert('Error while fetching expense data');
@@ -117,7 +113,7 @@ export class HomeComponent implements OnInit {
         this.combinedList = combined.filter((trans: any) => trans.userId === this.userId);
         
         // Calculate total combined per month
-        this.calculateTotalCombined();
+        this.calculateTotal(this.combinedList, this.totalCombined);
         // Prepare data for the selected year and month
         this.generateMonthlyData();
         // Render the chart for the selected month and year
@@ -131,60 +127,22 @@ export class HomeComponent implements OnInit {
 
 
 
-  calculateTotalIncome() {
-    // Initialize totalIncome object with 0 for each month
-    this.totalIncome = {
-      0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0
-    };
+  calculateTotal(transactionList: Transaction[], total: { [key: number]: number }) {
+    // Initialize total object with 0 for each month
+    for (let i = 0; i < 12; i++) {
+      total[i] = 0;
+    }
   
-    // Loop through expense list and calculate the total per month for the selected year
-    this.incomeList.forEach((income: Transaction) => {
-      const [day, month, year] = income.currentDate.split('/');
-      const incomeYear = parseInt(year);
-      const incomeMonth = parseInt(month) - 1; // Convert to 0-indexed month
-      const incomeAmount = Number(income.amount);
-  
-      // Filter by selected year
-      if (incomeYear === this.selectedYear) {
-        this.totalIncome[incomeMonth] += incomeAmount; // Add amount to the corresponding month
-      }
-    });
-  }  
-  calculateTotalExpense() {
-    // Initialize totalExpense object with 0 for each month
-    this.totalExpense = {
-      0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0
-    };
-  
-    // Loop through expense list and calculate the total per month for the selected year
-    this.expenseList.forEach((expense: Transaction) => {
-      const [day, month, year] = expense.currentDate.split('/');
-      const expenseYear = parseInt(year);
-      const expenseMonth = parseInt(month) - 1; // Convert to 0-indexed month
-      const expenseAmount = Number(expense.amount);
+    // Loop through the transaction list and calculate the total per month for the selected year
+    transactionList.forEach((transaction: Transaction) => {
+      const [day, month, year] = transaction.currentDate.split('/');
+      const transactionYear = parseInt(year);
+      const transactionMonth = parseInt(month) - 1; // Convert to 0-indexed month
+      const transactionAmount = Number(transaction.amount);
   
       // Filter by selected year
-      if (expenseYear === this.selectedYear) {
-        this.totalExpense[expenseMonth] += expenseAmount; // Add amount to the corresponding month
-      }
-    });
-  }  
-  calculateTotalCombined() {
-    // Initialize totalCombined object with 0 for each month
-    this.totalCombined = {
-      0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0
-    };
-  
-    // Loop through combined list and calculate the total per month for the selected year
-    this.combinedList.forEach((combined: Transaction) => {
-      const [day, month, year] = combined.currentDate.split('/');
-      const combinedYear = parseInt(year);
-      const combinedMonth = parseInt(month) - 1; // Convert to 0-indexed month
-      const combinedAmount = Number(combined.amount);
-  
-      // Filter by selected year
-      if (combinedYear === this.selectedYear) {
-        this.totalCombined[combinedMonth] += combinedAmount; // Add amount to the corresponding month
+      if (transactionYear === this.selectedYear) {
+        total[transactionMonth] += transactionAmount; // Add amount to the corresponding month
       }
     });
   }
@@ -192,9 +150,9 @@ export class HomeComponent implements OnInit {
   onYearChange(event: any) {
     this.selectedYear = event.value; // MatSelectChange object provides the selected value
     // Recalculate the totals based on the new year
-    this.calculateTotalIncome();
-    this.calculateTotalExpense(); 
-    this.calculateTotalCombined(); 
+    this.calculateTotal(this.incomeList, this.totalIncome);
+    this.calculateTotal(this.expenseList, this.totalExpense);
+    this.calculateTotal(this.combinedList, this.totalCombined);
   }
 
 

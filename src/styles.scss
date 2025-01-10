@@ -23,3 +23,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 input {
   background-color: var(--primary-color);
 }
+.list-icon {
+  vertical-align: middle; /* Aligns the icon with the text vertically */
+  margin-right: 8px;      /* Adds some space between the icon and text */
+  font-size: 16px;        /* Optional: Adjust icon size to match text */
+}
+.icon-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-right mat-icon {
+  margin-left: auto; /* Pushes the icon to the far right */
+}

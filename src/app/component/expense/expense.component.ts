@@ -61,8 +61,6 @@ export class ExpenseComponent {
     this.READ_expense();
     this.READ_category();
   }
-
-
   READ_category() {
     this.cat.READ_category().subscribe(
       (res) => {
@@ -79,9 +77,6 @@ export class ExpenseComponent {
     );
   }
   CREATE_expense() {
-    alert(this.amount);
-    alert(this.reason);
-    alert(this.category);
     if (this.amount === '' || this.reason === '') {
       alert('Fill all input fields');
       return;
@@ -173,16 +168,6 @@ export class ExpenseComponent {
     this.category = '';
     this.formattedCurrentDate = this.datePipe.transform(new Date(), 'MM/dd/yyyy');
   }
-  onCategoryChange() {
-    // Reload the expense list from the database whenever the category changes
-    this.READ_expense();  // Fetch all data without filtering
-    if (this.selectedCategory && this.selectedCategory !== 'All') {
-      // After fetching, filter the expenses based on the selected category
-      this.expenseList = this.expenseList.filter(expense => expense.category === this.selectedCategory);
-    }
-    // Optionally log the selected category
-    console.log('Category changed to:', this.selectedCategory);
-  }
   onReasonChange(event: any): void {
     const selectedReason = event.value;
     // Find the category object that matches the selected reason
@@ -225,7 +210,7 @@ export class ExpenseComponent {
             label: getResponsiveLabel(), // Responsive label
             data: y_axis, // Cumulative total for each day
             borderColor: '#F44336', // Line color
-            backgroundColor: '#F4C5C533', // Fill color with transparency
+            backgroundColor: '#F4C5C599', // Fill color with transparency
             fill: true, // Enable filling under the line
             tension: 0 // Set tension to 0 for straight lines
           }

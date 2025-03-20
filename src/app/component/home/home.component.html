@@ -18,9 +18,15 @@
         <div class="container mt-4">
           <div class="row">
             <!-- Year Dropdown -->
+<<<<<<< HEAD
             <mat-form-field appearance="fill"  class="year-selector">
               <mat-label>Select Year</mat-label>
               <mat-select [(value)]="selectedYear" (selectionChange)="onYearChange($event)">
+=======
+            <mat-form-field appearance="fill" class="year-selector">
+              <mat-label>Select Year</mat-label>
+              <mat-select [(value)]="selectedYear" (selectionChange)="onYearChange($event.value)">
+>>>>>>> 512fc2b (Final submission before IV)
                 <mat-option *ngFor="let year of availableYears" [value]="year">
                   {{ year }}
                 </mat-option>
@@ -120,7 +126,12 @@
         <mat-card>
           <mat-card-content>
             <p>"This app has transformed my budgeting process!"</p>
+<<<<<<< HEAD
             <ngb-rating [(rate)]="rating" [max]="5" class="mt-2">
+=======
+            <p>- User A</p>
+            <ngb-rating [(rate)]="rating_1" [max]="5" class="mt-2">
+>>>>>>> 512fc2b (Final submission before IV)
               <ng-template let-fill="fill" let-index="index">
                 <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100"></i>
               </ng-template>
@@ -133,7 +144,16 @@
           <mat-card-content>
             <p>"I finally have control over my finances."</p>
             <p>- User B</p>
+<<<<<<< HEAD
           </mat-card-content>
+=======
+          <ngb-rating [(rate)]="rating_2" [max]="5" class="mt-2">
+            <ng-template let-fill="fill" let-index="index">
+              <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100"></i>
+            </ng-template>
+          </ngb-rating>
+        </mat-card-content>
+>>>>>>> 512fc2b (Final submission before IV)
         </mat-card>
       </div>
       <div class="col-md-4">
@@ -141,7 +161,16 @@
           <mat-card-content>
             <p>"The profit calculation feature is a game changer!"</p>
             <p>- User C</p>
+<<<<<<< HEAD
           </mat-card-content>
+=======
+          <ngb-rating [(rate)]="rating_3" [max]="5" class="mt-2">
+            <ng-template let-fill="fill" let-index="index">
+              <i class="bi-star{{ fill === 100 ? '-fill' : '' }}" [class.filled]="fill === 100"></i>
+            </ng-template>
+          </ngb-rating>
+        </mat-card-content>
+>>>>>>> 512fc2b (Final submission before IV)
         </mat-card>
       </div>
     </div>

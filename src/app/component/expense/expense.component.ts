@@ -25,7 +25,11 @@ export class ExpenseComponent {
     amount: '',
     reason: '',
     category: '',
+<<<<<<< HEAD
     currentDate: '',
+=======
+    currentDate: new Date,
+>>>>>>> 512fc2b (Final submission before IV)
   };
 
   id: string = '';
@@ -37,6 +41,13 @@ export class ExpenseComponent {
   formattedCurrentDate: string | null = '';
   selectedCategory: string | null = null;  // Variable to store the selected category
   displayedColumns: string[] = ['amount', 'reason', 'category', 'date', 'action'];
+<<<<<<< HEAD
+=======
+  monthNames: string[] = [
+    "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"
+  ];
+>>>>>>> 512fc2b (Final submission before IV)
   isEditing: boolean = false;
   
   monthlyData: { [month: number]: number[] } = {};
@@ -55,11 +66,20 @@ export class ExpenseComponent {
   ) {}
 
   ngOnInit(): void {
+<<<<<<< HEAD
     this.availableYears = this.cal.generateAvailableYears(); 
+=======
+    this.availableYears = this.cal.generateAvailableYears();
+>>>>>>> 512fc2b (Final submission before IV)
     this.formattedCurrentDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
     this.userId = localStorage.getItem('userId') || '';  
     this.READ_expense();
     this.READ_category();
+<<<<<<< HEAD
+=======
+    this.updateChartData(); // Ensure the chart initializes correctly
+    Chart.register(...registerables);
+>>>>>>> 512fc2b (Final submission before IV)
   }
   READ_category() {
     this.cat.READ_category().subscribe(
@@ -86,7 +106,11 @@ export class ExpenseComponent {
       this.expenseObj.amount = this.amount;
       this.expenseObj.reason = this.reason;
       this.expenseObj.category = this.category;
+<<<<<<< HEAD
       this.expenseObj.currentDate = this.formattedCurrentDate || '';
+=======
+      this.expenseObj.currentDate = new Date;
+>>>>>>> 512fc2b (Final submission before IV)
 
       this.trans.CREATE_expense(this.expenseObj);
       this.resetForm();
@@ -98,6 +122,7 @@ export class ExpenseComponent {
         this.expenseList = res.map((e: any) => {
           const trans = e.payload.doc.data();
           trans.id = e.payload.doc.id;
+<<<<<<< HEAD
           return trans;
         })
         .filter((expense: Transaction) => expense.userId === this.userId)
@@ -119,17 +144,41 @@ export class ExpenseComponent {
         this.generateMonthlyData();
         // Render the chart for the selected month and year
         this.renderChart(this.selectedYear, this.displayedMonth);
+=======
+  
+          // Convert Firestore timestamp to JavaScript Date
+          if (trans.currentDate && trans.currentDate.seconds) {
+            trans.currentDate = new Date(trans.currentDate.seconds * 1000);
+          }
+          return trans;
+        });
+  
+        // Sort by date in ascending order
+        this.expenseList.sort((a, b) => a.currentDate.getTime() - b.currentDate.getTime());
+  
+        // Update the chart based on selected year and month
+        this.updateChartData();
+>>>>>>> 512fc2b (Final submission before IV)
       },
       (err) => {
         alert('Error while fetching expense data');
       }
     );
   }
+<<<<<<< HEAD
   UPDATE_expense() {console.log('Updating expense with ID:', this.id);
+=======
+  
+  
+  UPDATE_expense() {
+    console.log('Updating expense with ID:', this.id);
+    
+>>>>>>> 512fc2b (Final submission before IV)
     if (this.amount === '' || this.reason === '') {
         alert('Fill all input fields');
         return;
     } else {
+<<<<<<< HEAD
         this.expenseObj.id = this.id;
         this.expenseObj.userId = this.userId;
         this.expenseObj.amount = this.amount;
@@ -144,6 +193,27 @@ export class ExpenseComponent {
         });
     }
 }
+=======
+        const existingExpense = this.expenseList.find(exp => exp.id === this.id);
+        
+        if (existingExpense) {
+            this.expenseObj.id = this.id;
+            this.expenseObj.userId = this.userId;
+            this.expenseObj.amount = this.amount;
+            this.expenseObj.reason = this.reason;
+            this.expenseObj.category = this.category;
+            this.expenseObj.currentDate = existingExpense.currentDate; // Retain the original date
+            
+            this.trans.UPDATE_expense(this.expenseObj).then(() => {
+                this.resetForm();
+            }).catch(err => {
+                alert('Error while updating expense data');
+            });
+        }
+    }
+  }
+
+>>>>>>> 512fc2b (Final submission before IV)
   DELETE_expense(expense: Transaction) {
     if (window.confirm('Are you sure you want to delete?')) {
       this.trans.DELETE_expense(expense);
@@ -157,7 +227,10 @@ export class ExpenseComponent {
     this.amount = expense.amount;
     this.reason = expense.reason;
     this.category = expense.category;
+<<<<<<< HEAD
     this.formattedCurrentDate = expense.currentDate;
+=======
+>>>>>>> 512fc2b (Final submission before IV)
   }
   resetForm() {
     this.isEditing = false;
@@ -166,7 +239,10 @@ export class ExpenseComponent {
     this.amount = '';
     this.reason = '';
     this.category = '';
+<<<<<<< HEAD
     this.formattedCurrentDate = this.datePipe.transform(new Date(), 'MM/dd/yyyy');
+=======
+>>>>>>> 512fc2b (Final submission before IV)
   }
   onReasonChange(event: any): void {
     const selectedReason = event.value;
@@ -177,12 +253,16 @@ export class ExpenseComponent {
       this.category = selectedCategory.category; // Set the category name to the input field
     }
   }
+<<<<<<< HEAD
   
 
+=======
+>>>>>>> 512fc2b (Final submission before IV)
 
   renderChart(year: number, month: number) {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const x_axis = Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString());
+<<<<<<< HEAD
     const y_axis = this.monthlyData[month];
 
     if (this.chartInstance) {
@@ -277,4 +357,122 @@ export class ExpenseComponent {
   get displayedMonthName(): string {
     return new Date(this.selectedYear, this.displayedMonth).toLocaleString('default', { month: 'long' });
   }
+=======
+
+    // Initialize an array for cumulative amounts
+    let y_axis = new Array(daysInMonth).fill(0);
+
+    // Filter expenses for the selected year and month
+    const filteredExpenses = this.expenseList
+      .filter(expense => 
+        expense.currentDate.getFullYear() === year &&
+        expense.currentDate.getMonth() === month
+      );
+
+    // Store raw daily amounts before accumulation
+    let dailyAmounts = new Array(daysInMonth).fill(0);
+    
+    filteredExpenses.forEach(expense => {
+        const dayIndex = expense.currentDate.getDate() - 1; // Convert day to array index
+        if (dayIndex >= 0 && dayIndex < daysInMonth) {
+            dailyAmounts[dayIndex] += expense.amount; // Add expense to the correct day
+        }
+    });
+
+    // Convert daily amounts to cumulative sum
+    y_axis[0] = dailyAmounts[0]; // First day remains the same
+    for (let i = 1; i < daysInMonth; i++) {
+        y_axis[i] = y_axis[i - 1] + dailyAmounts[i]; // Accumulate the total
+    }
+
+    // Destroy previous chart instance to prevent duplicates
+    if (this.chartInstance) {
+        this.chartInstance.destroy();
+    }
+
+    const ctx = document.getElementById('profitChart') as HTMLCanvasElement;
+
+    this.chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: x_axis,
+            datasets: [
+                {
+                    label: `Cumulative Expense for ${this.getMonthName(month)}`,
+                    data: y_axis,
+                    borderColor: '#F44336', // Line color
+                    backgroundColor: '#F4C5C599', // Fill color with transparency
+                    fill: true, // Enable filling under the line
+                    tension: 0, // Sharp line
+                    // stepped: true // 🔴 Make it a step-like graph (spikes instead of curves)
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Day of the Month'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Cumulative Amount (RM)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+  }
+
+  // Function to get month name from index
+  getMonthName(month: number): string {
+      return this.monthNames[month] || "";
+  }
+
+  
+  updateChartData() {
+    const filteredExpenses = this.expenseList.filter(expense => {
+      const expenseDate = expense.currentDate;
+      return (
+        expenseDate.getFullYear() === this.selectedYear &&
+        expenseDate.getMonth() === this.displayedMonth
+      );
+    });
+  
+    // Sort filtered expenses by date
+    filteredExpenses.sort((a, b) => a.currentDate.getTime() - b.currentDate.getTime());
+  
+    // Initialize an array to hold cumulative expense per day
+    const daysInMonth = new Date(this.selectedYear, this.displayedMonth + 1, 0).getDate();
+    const dailyExpenses = new Array(daysInMonth).fill(0);
+  
+    // Accumulate expenses per day
+    filteredExpenses.forEach(expense => {
+      const day = expense.currentDate.getDate() - 1; // Days are 1-based, array index is 0-based
+      dailyExpenses[day] += parseFloat(expense.amount);
+    });
+  
+    // Update monthlyData for the selected month
+    this.monthlyData[this.displayedMonth] = dailyExpenses;
+  
+    // Render the updated chart
+    this.renderChart(this.selectedYear, this.displayedMonth);
+  }
+  onMonthChange(value: number) {
+    this.displayedMonth = value; // Update in real-time
+    this.renderChart(this.selectedYear, this.displayedMonth); // Refresh chart instantly
+  }
+  
+>>>>>>> 512fc2b (Final submission before IV)
 }

@@ -72,15 +72,23 @@
         </mat-expansion-panel>
     </mat-accordion>
     <div class="row mt-3">
+<<<<<<< HEAD
         <div class="col-md-4">
             <div class="card p-5 shadow">
                 <h2 class="card-title text-center primary">Add expense</h2>
+=======
+        <!-- Input -->
+        <div class="col-md-4">
+            <div class="card p-5 shadow">
+                <h2 class="card-title text-center text-danger ">Add expense</h2>
+>>>>>>> 512fc2b (Final submission before IV)
                 <form #employeeForm="ngForm">
                     <mat-form-field>
                         <mat-label>Amount</mat-label>
                         <input matInput name="amount" [(ngModel)]="amount" type="number" min="0" max="9999">
                         <mat-icon matSuffix>credit_card_gear</mat-icon>
                     </mat-form-field>
+<<<<<<< HEAD
                     <!-- <mat-form-field>
                         <mat-label>Reason</mat-label>
                         <input matInput name="reason" [(ngModel)]="reason" maxlength="20">
@@ -94,6 +102,8 @@
                             <mat-option value="Saving">Saving</mat-option>
                         </mat-select>
                     </mat-form-field> -->
+=======
+>>>>>>> 512fc2b (Final submission before IV)
                     <mat-form-field>
                         <mat-label>Reason</mat-label>
                             <mat-select name="reason" [(ngModel)]="reason" (selectionChange)="onReasonChange($event)">
@@ -107,11 +117,14 @@
                         <input matInput [value]="category" disabled>
                         <mat-icon matSuffix>category</mat-icon>
                     </mat-form-field>
+<<<<<<< HEAD
                     <mat-form-field>
                         <mat-label>Date</mat-label>
                         <input matInput name="currentDate" [value]="formattedCurrentDate" disabled>
                         <mat-icon matSuffix>calendar_month</mat-icon>
                     </mat-form-field>
+=======
+>>>>>>> 512fc2b (Final submission before IV)
                     <div class="text-center mt-3" *ngIf="!isEditing">
                         <button mat-raised-button 
                                 class="m-2 w-100" 
@@ -146,6 +159,10 @@
                 </form>
             </div>
         </div>
+<<<<<<< HEAD
+=======
+        <!-- Data -->
+>>>>>>> 512fc2b (Final submission before IV)
         <div class="col-md-8">
             <div class="card p-5 shadow set-width">
                 <h2 class="text-danger text-center"> Expense List </h2>
@@ -169,7 +186,11 @@
                         <!-- Date Column -->
                         <ng-container matColumnDef="date">
                             <th mat-header-cell *matHeaderCellDef class="fw-bold"> Date </th>
+<<<<<<< HEAD
                             <td mat-cell *matCellDef="let expense"> {{expense.currentDate}} </td>
+=======
+                            <td mat-cell *matCellDef="let expense"> {{ expense.currentDate | date:'dd/MM/yyyy' }}</td>
+>>>>>>> 512fc2b (Final submission before IV)
                         </ng-container>
                         <!-- Date Column -->
                         <ng-container matColumnDef="action">
@@ -195,12 +216,17 @@
             <div class="card p-5 shadow">
                 <mat-card>
                     <mat-card-header>
+<<<<<<< HEAD
                         <h2 class="card-title text-center primary">Cumulative Expense</h2>
+=======
+                        <h2 class="card-title text-center text-danger ">Cumulative Expense</h2>
+>>>>>>> 512fc2b (Final submission before IV)
                     </mat-card-header>
                     <mat-card-content>
                         <p>Automatically calculate your monthly profit and visualize your financial health.</p>
 
                         <!-- Year Dropdown -->
+<<<<<<< HEAD
                         <div>
                             <mat-form-field appearance="fill"  class="year-selector">
                                 <mat-label>Select Year</mat-label>
@@ -210,10 +236,20 @@
                             </mat-form-field>
                         </div>
                         
+=======
+                        <mat-form-field appearance="fill" class="year-selector">
+                            <mat-label>Select Year</mat-label>
+                            <mat-select [(ngModel)]="selectedYear" (selectionChange)="updateChartData()">
+                                <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+>>>>>>> 512fc2b (Final submission before IV)
                         <!-- Month Slider -->
                         <div>
                             <label for="month-slider">Select Month: </label>
                             <input
+<<<<<<< HEAD
                               type="range"
                               id="month-slider"
                               min="0"
@@ -222,6 +258,16 @@
                               (input)="onMonthChange($event)"
                             />
                             <span>{{ displayedMonthName }}</span>
+=======
+                                type="range"
+                                id="month-slider"
+                                min="0"
+                                max="11"
+                                [(ngModel)]="displayedMonth"
+                                (ngModelChange)="onMonthChange($event)" 
+                            />
+                            <span>{{ monthNames[displayedMonth] }}</span>
+>>>>>>> 512fc2b (Final submission before IV)
                         </div>
                           
                         <canvas id="profitChart"></canvas>

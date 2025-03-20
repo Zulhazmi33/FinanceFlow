@@ -27,32 +27,81 @@
         </mat-expansion-panel>
     </mat-accordion>
     <div class="row mt-3">
+<<<<<<< HEAD
         <div class="col-md-4">
             <div class="card p-5 shadow">
                 <h5>Need</h5>
                 <mat-slider min="0" max="100" step="1" discrete [(ngModel)]="needValue">
                     <input matSliderThumb>
+=======
+        <div class="col-md-3">
+            <div class="card p-5 shadow">
+                <h5 class="text-center">Need</h5>
+                <mat-slider min="0" max="100" step="1" discrete>
+                    <input matSliderThumb [(ngModel)]="needValue">
+>>>>>>> 512fc2b (Final submission before IV)
                 </mat-slider>
                 <p>Value: {{ needValue }}</p>
             </div>
         </div>
+<<<<<<< HEAD
         <div class="col-md-4">
             <div class="card p-5 shadow">
                 <h5>Want</h5>
                 <mat-slider min="0" max="100" step="1" discrete [(ngModel)]="wantValue">
                     <input matSliderThumb>
+=======
+        <div class="col-md-3">
+            <div class="card p-5 shadow">
+                <h5 class="text-center">Want</h5>
+                <mat-slider min="0" max="100" step="1" discrete>
+                    <input matSliderThumb [(ngModel)]="wantValue">
+>>>>>>> 512fc2b (Final submission before IV)
                 </mat-slider>
                 <p>Value: {{ wantValue }}</p>
             </div>
         </div>
+<<<<<<< HEAD
         <div class="col-md-4">
             <div class="card p-5 shadow">
                 <h5>Saving</h5>
                 <mat-slider min="0" max="100" step="1" discrete >
                     <input matSliderThumb>
+=======
+        <div class="col-md-3">
+            <div class="card p-5 shadow">
+                <h5 class="text-center">Saving</h5>
+                <mat-slider min="0" max="100" step="1" discrete>
+                    <input matSliderThumb [(ngModel)]="savingValue">
+>>>>>>> 512fc2b (Final submission before IV)
                 </mat-slider>
                 <p>Value: {{ savingValue }}</p>
             </div>
         </div>
+<<<<<<< HEAD
+=======
+        <div class="col-md-3">
+            <div class="card p-5 shadow">
+                <h5 class="text-center">Total percentage</h5>
+                <h5 class="text-center">{{ totalValue }}</h5>
+                <button mat-flat-button (click)="checkRatio()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-8">
+            <div style="width: 400px; height: 400px;">
+                <!-- <canvas baseChart
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="'pie'"
+                  [options]="pieChartOptions"
+                  [colors]="pieChartColors">
+                </canvas> -->
+              </div>
+        </div>
+>>>>>>> 512fc2b (Final submission before IV)
     </div>
 </div>

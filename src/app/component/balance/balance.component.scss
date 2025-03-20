@@ -17,6 +17,10 @@ canvas {
   width: 100%;
   max-height: 500px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 512fc2b (Final submission before IV)
 /* Container holding the data */
 .set-width {
     max-height: 600px;  /* Adjust height to show 5 items (or based on the height of each item) */
@@ -31,7 +35,21 @@ canvas {
   }
 /* negative amount (reddish background) */
 .negative-amount {
+<<<<<<< HEAD
 background-color: #F4C5C5;
+=======
+  background-color: #F4C5C5;
+}
+.total-amount {
+  background-color: #F4E2C5;
+}
+.positive-total {
+  background-color: #D4E8B0;
+}
+/* negative amount (reddish background) */
+.negative-total {
+background-color: #E8AAAA;
+>>>>>>> 512fc2b (Final submission before IV)
 }
   
 mat-form-field {
